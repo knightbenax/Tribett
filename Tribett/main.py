@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import sqlalchemy as db
 import json
 import decimal, datetime
@@ -12,6 +12,34 @@ app = Flask(__name__)
 clients = db.Table('clients', metadata, autoload=True, autoload_with=engine)
 product_area = db.Table('product_area', metadata, autoload=True, autoload_with=engine)
 features = db.Table('features', metadata, autoload=True, autoload_with=engine)
+
+#Get the product areas
+def getProductAreas():
+    product_area_query = db.select([product_area.columns.name])
+    product_area_res = connection.execute(product_area_query).fetchall()
+    product_area_res_json = json.dumps([dict(r) for r in product_area_res], default=alchemyencoder)
+    return product_area_res_json
+
+#Get the clients list
+def getClients():
+    clients_query = db.select([clients.columns.name])
+    clients_res = connection.execute(clients_query).fetchall()
+    clients_res_json = json.dumps([dict(r) for r in clients_res], default=alchemyencoder)
+    return clients_res_json
+
+#Get the features list
+def getFeatures():
+    features_query = db.select([features]).order_by(db.asc(features.columns.priority))
+    features_res = connection.execute(features_query).fetchall()
+    features_res_json = json.dumps([dict(r) for r in features_res], default=alchemyencoder)
+    return features_res_json
+
+#Get the features list without json.dump. This only works well with jinja's tojson keywordself.
+#which sadly I can't access in a seperate ajax call outside of jinja
+def getFeaturesFromAjax():
+    features_query = db.select([features]).order_by(db.asc(features.columns.priority))
+    features_res = connection.execute(features_query).fetchall()
+    return features_res
 
 #For parsing sqlalchemy results to readable json
 def alchemyencoder(obj):
@@ -62,31 +90,21 @@ def add_feature():
 
     #print(priority)
     rePrioritize(priority)
-
     query = db.insert(features).values(title = title, description = desc, priority=priority, target_date=date, product_area=area, client=client, status=status)
     connection.execute(query)
+    
+    features_res_json = getFeaturesFromAjax()
 
-    features_query = db.select([features])
-    features_res = connection.execute(features_query).fetchall()
-    features_res_json = json.dumps([dict(r) for r in features_res], default=alchemyencoder)
-
-    data = {"features": features_res_json}
-    return json.dumps({'status':'OK', 'message': 'success', 'data': data});
+    data = {'status':'OK', 'message': 'success', "features": [dict(row) for row in features_res_json]}
+    return jsonify(data=data);
 
 
 @app.route("/")
 def home():
-    clients_query = db.select([clients.columns.name])
-    clients_res = connection.execute(clients_query).fetchall()
-    clients_res_json = json.dumps([dict(r) for r in clients_res], default=alchemyencoder)
 
-    product_area_query = db.select([product_area.columns.name])
-    product_area_res = connection.execute(product_area_query).fetchall()
-    product_area_res_json = json.dumps([dict(r) for r in product_area_res], default=alchemyencoder)
-
-    features_query = db.select([features])
-    features_res = connection.execute(features_query).fetchall()
-    features_res_json = json.dumps([dict(r) for r in features_res], default=alchemyencoder)
+    product_area_res_json = getProductAreas()
+    clients_res_json = getClients()
+    features_res_json = getFeatures()
 
     data = {"clients": clients_res_json, "product_area": product_area_res_json, "features": features_res_json}
     return render_template("dashboard.html", data = data)
