@@ -4,7 +4,7 @@ import json
 import decimal, datetime
 
 #Database connection and magic
-engine = db.create_engine('mysql+pymysql://root:#skywalker$!@http://142.93.35.53/tribett')
+engine = db.create_engine('mysql+pymysql://root:%s@http://142.93.35.53/tribett' % urlquote(#skywalker!))
 connection = engine.connect()
 metadata = db.MetaData()
 app = Flask(__name__)
