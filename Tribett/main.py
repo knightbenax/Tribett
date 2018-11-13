@@ -12,6 +12,7 @@ app = Flask(__name__)
 clients = db.Table('clients', metadata, autoload=True, autoload_with=engine)
 product_area = db.Table('product_area', metadata, autoload=True, autoload_with=engine)
 features = db.Table('features', metadata, autoload=True, autoload_with=engine)
+#features = db.Table('features', metadata, autoload=True, autoload_with=engine)
 
 #Get the product areas
 def getProductAreas():
@@ -92,7 +93,7 @@ def add_feature():
     rePrioritize(priority)
     query = db.insert(features).values(title = title, description = desc, priority=priority, target_date=date, product_area=area, client=client, status=status)
     connection.execute(query)
-    
+
     features_res_json = getFeaturesFromAjax()
 
     data = {'status':'OK', 'message': 'success', "features": [dict(row) for row in features_res_json]}
