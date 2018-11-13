@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel='shortcut icon' type='image/x-icon' href="{{ url_for('static', filename='images/icon.ico') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nprogress.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/notification-styles/ns-default.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/notification-styles/ns-style-bar.css') }}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <title>Tribett</title>
+  </head>
+  <body>
+    <div class="header">
+      <div class="app-name">Tribett<span class="trademark">&trade;</span></div>
+      <div class="user-profile">
+      </div>
+    </div>
+    <div class="container">
+      <div class="top-button-holder">
+        <button class="button" data-bind="click: addNewRequest"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Feature</button>
+      </div>
+      <section class="features-holder">
+        <div class="not-started">
+          <div class="top top--grey">Not Started</div>
+        </div>
+        <div class="in-progress">
+          <div class="top top--blue">In-Progress</div>
+        </div>
+        <div class="done">
+          <div class="top top--green">Done</div>
+        </div>
+      </section>
+    </div>
+    <div class="new-feature">
+      {% include 'new-feature.html' %}
+    </div>
+    <!-- Insert this line above script imports -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/knockout-3.4.2.js') }}"></script>
+    <!--Needed for the custom notification view at the top -->
+    <script src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/classie.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notificationFx.js') }}"></script>
+    <!--Needed for the custom notification view at the top -->
+    <script src="{{ url_for('static', filename='js/nprogress.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/listeners.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+  </body>
+</html>

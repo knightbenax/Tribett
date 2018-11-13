@@ -1,0 +1,36 @@
+<div class="modal-bg">
+  <button data-bind="click: closeRequest" class="close"><i class="close-icon fas fa-times fa-fw"></i></button>
+  <div class="modal-child">
+    <section class="request-header">New Feature Request</section>
+    <label class="request-label">Title</label>
+    <input class="request-value" type="text" name="feature-title" data-bind='value: featureTitle, valueUpdate: "afterkeydown"' />
+    <label class="request-label">Description</label>
+    <textarea class="request-value" name="feature-desc" rows="6" cols="80" data-bind="value: desc"></textarea>
+    <div class="part-section">
+      <div class="part-one">
+        <label class="request-label">Client</label>
+        <select class="request-value-select" data-bind="options: clients, value: clientSelected"></select>
+      </div>
+      <div class="part-two">
+        <label class="request-label">Priority</label>
+        <input class="request-value" type="number" name="feature-title" value="" data-bind="value: priority"/>
+      </div>
+    </div>
+    <div class="part-section part-section--no-margin-bottom">
+      <div class="part-one">
+        <label class="request-label">Product Area</label>
+        <select class="request-value-select" data-bind="options: productArea, value: productAreaSelected"></select>
+      </div>
+      <div class="part-two">
+        <label class="request-label">Target Date</label>
+        <input class="request-value" type="date" name="feature-title" data-bind="value: targetDate"/>
+      </div>
+    </div>
+    <div class="button-holder button-holder--right">
+      <button class="button" data-bind="click: addNewRequestToServer"><i class="fas fa-check"></i>&nbsp;&nbsp;Add</button>
+      &nbsp;&nbsp;
+      &nbsp;&nbsp;
+      <button class="button--negative" data-bind="click: closeRequest">Cancel</button>
+    </div>
+  </div>
+</div>
