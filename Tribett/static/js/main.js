@@ -54,7 +54,6 @@ function FeaturesRequestViewModel(){
 
   //Attach the product area values to the observable
   for (var key in features_json){
-    console.log(features_json[key].status);
     if (features_json[key].status == "not-started"){
       self.featuresNotStarted.push(
         new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
@@ -68,10 +67,6 @@ function FeaturesRequestViewModel(){
         new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
       );
     }
-  }
-
-  self.whichFeature = function(){
-
   }
 
   self.addNewRequest = function(){
