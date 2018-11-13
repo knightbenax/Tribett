@@ -1,4 +1,4 @@
-from urllib.parse import quote_plus as urlquote
+from urllib import parse
 from flask import Flask, render_template, request, jsonify
 import sqlalchemy as db
 import json
@@ -6,7 +6,7 @@ import decimal, datetime
 
 app = Flask(__name__)
 #Database connection and magic
-engine = db.create_engine('mysql+pymysql://root:%s@http://142.93.35.53/tribett' % urlquote('#skywalker!'))
+engine = db.create_engine('mysql+pymysql://root:%s@http://142.93.35.53/tribett' % parse.unquote_plus('#skywalker$!'))
 metadata = db.MetaData()
 connection = engine.connect()
 
