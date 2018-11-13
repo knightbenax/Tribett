@@ -4,7 +4,7 @@ import json
 import decimal, datetime
 
 #Database connection and magic
-engine = db.create_engine('mysql://root:@localhost:3306/tribett?unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock')
+engine = db.create_engine('mysql+pymysql://root:@localhost:3306/tribett?unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock')
 connection = engine.connect()
 metadata = db.MetaData()
 app = Flask(__name__)
