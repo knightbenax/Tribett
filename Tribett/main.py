@@ -3,11 +3,11 @@ import sqlalchemy as db
 import json
 import decimal, datetime
 
+app = Flask(__name__)
 #Database connection and magic
 engine = db.create_engine('mysql+pymysql://root:%s@http://142.93.35.53/tribett' % urlquote(#skywalker!))
-connection = engine.connect()
 metadata = db.MetaData()
-app = Flask(__name__)
+connection = engine.connect()
 
 clients = db.Table('clients', metadata, autoload=True, autoload_with=engine)
 product_area = db.Table('product_area', metadata, autoload=True, autoload_with=engine)
