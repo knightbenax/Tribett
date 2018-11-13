@@ -52,22 +52,30 @@ function FeaturesRequestViewModel(){
     self.productArea.push(product_area_json[key].name);
   }
 
-  //Attach the product area values to the observable
-  for (var key in features_json){
-    if (features_json[key].status == "not-started"){
-      self.featuresNotStarted.push(
-        new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
-      );
-    } else if (features_json[key].status == "in-progress"){
-      self.featuresInProgress.push(
-        new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
-      );
-    } else if (features_json[key].status == "done"){
-      self.featuresDone.push(
-        new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
-      );
+  self.parseFeatures = function (){
+    //Attach the product area values to the observable
+    console.log("start");
+    for (var key in features_json){
+      console.log(features_json[key].status);
+      if (features_json[key].status == "not-started"){
+        self.featuresNotStarted.push(
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+        );
+      } else if (features_json[key].status == "in-progress"){
+        self.featuresInProgress.push(
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+        );
+      } else if (features_json[key].status == "done"){
+        self.featuresDone.push(
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+        );
+      }
     }
+    console.log(self.featuresNotStarted().length);
   }
+
+//Add the new json from the server
+  self.parseFeatures();
 
   self.addNewRequest = function(){
     showNewFeatureDialog();
@@ -116,11 +124,24 @@ function FeaturesRequestViewModel(){
       NProgress.start();
       let new_feature_request = new NewFeatureRequest(self.featureTitle(), self.desc(), self.targetDate(), self.clientSelected(), self.productAreaSelected(), self.priority());
       $.post(api_url + "/add", { new_feature_request }, function(data) {
-        data = JSON.parse(data);
-        if (data.message == "success"){
+        // result = JSON.parse(data);
+        result = data;
+        if (result.data.message == "success"){
           NProgress.done();
           hideNewFeatureDialog();
           showTopNotification("Feature has been added", "info");
+          //Add the new json from the server. Need to find
+          //a more optimal way to do this. Also
+          //normally we shouldn't have to reload all again but
+          //due to the rePrioritization that might happen.
+          //we have to. TO-DO here to make this optimal
+          features_json = result.data.features;
+          self.featuresNotStarted([]);
+          self.featuresInProgress([]);
+          self.featuresDone([]);
+          self.parseFeatures();
+          console.log(features_json);
+          console.log(self.featuresNotStarted().length);
         }
       });
     }
@@ -128,4 +149,5 @@ function FeaturesRequestViewModel(){
   }
 }
 
-ko.applyBindings(new FeaturesRequestViewModel());
+var featuresRequestViewModel = new FeaturesRequestViewModel();
+ko.applyBindings(featuresRequestViewModel);

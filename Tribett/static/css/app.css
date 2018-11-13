@@ -134,7 +134,7 @@ body{
   background: #E1E5E6;
   padding: 0px 10px;
   overflow-x: scroll;
-  height: 100%;
+  height: calc(100% - 38px);
 }
 
 .features-inner-holder{

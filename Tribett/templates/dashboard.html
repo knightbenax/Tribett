@@ -119,7 +119,7 @@
       var clients_json = JSON.parse({{ data.clients|tojson }});
       var product_area_json = JSON.parse({{ data.product_area|tojson }});
       var features_json = JSON.parse({{ data.features|tojson }});
-      //console.log(product_area_json);
+      console.log(features_json);
     </script>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
