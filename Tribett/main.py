@@ -6,7 +6,7 @@ import decimal, datetime
 
 app = Flask(__name__)
 #Database connection and magic
-engine = db.create_engine('mysql+pymysql://root:%s@http://142.93.35.53/tribett' % parse.unquote_plus('#skywalker$!'))
+engine = db.create_engine('mysql+pymysql://root:%s@142.93.35.53/tribett' % parse.unquote_plus('#skywalker$!'))
 metadata = db.MetaData()
 connection = engine.connect()
 
