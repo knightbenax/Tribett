@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus as urlquote
 from flask import Flask, render_template, request, jsonify
 import sqlalchemy as db
 import json
