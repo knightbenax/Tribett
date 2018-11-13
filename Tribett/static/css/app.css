@@ -7,7 +7,7 @@ body{
   font-size: 14px;
   font-family: Avenir, 'sans-serif';
   height: 100vh;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 * {
