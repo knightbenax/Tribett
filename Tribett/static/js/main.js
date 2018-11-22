@@ -61,15 +61,15 @@ function FeaturesRequestViewModel(){
       //console.log(features_json[key].status);
       if (features_json[key].status == "not-started"){
         self.featuresNotStarted.push(
-          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].target_date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
         );
       } else if (features_json[key].status == "in-progress"){
         self.featuresInProgress.push(
-          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].target_date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
         );
       } else if (features_json[key].status == "done"){
         self.featuresDone.push(
-          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
+          new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].target_date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
         );
       }
     }
