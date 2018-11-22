@@ -19,7 +19,9 @@ function FeatureRequest(title, desc, date, client, area, priority){
   let self = this;
   self.title = title;
   self.desc = desc;
+  console.log(date);
   self.date = moment(date).format('ddd, Do MMM YYYY');
+  console.log(self.date);
   self.client = client;
   self.area = area;
   self.priority = priority;
@@ -54,9 +56,9 @@ function FeaturesRequestViewModel(){
 
   self.parseFeatures = function (){
     //Attach the product area values to the observable
-    console.log("start");
+    //console.log("start");
     for (var key in features_json){
-      console.log(features_json[key].status);
+      //console.log(features_json[key].status);
       if (features_json[key].status == "not-started"){
         self.featuresNotStarted.push(
           new FeatureRequest(features_json[key].title, features_json[key].description, features_json[key].date, features_json[key].client, features_json[key].product_area, features_json[key].priority)
@@ -71,7 +73,7 @@ function FeaturesRequestViewModel(){
         );
       }
     }
-    console.log(self.featuresNotStarted().length);
+    //console.log(self.featuresNotStarted().length);
   }
 
 //Add the new json from the server
